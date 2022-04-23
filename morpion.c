@@ -6,15 +6,15 @@
 const char YES[5] = "Yes";
 const char NO[5] = "No";
 
-typedef char table[2][2];
+typedef char table[3][3];
 
 // Procedures and functions
 bool menu();
 void rules();
 void initialize_board(table);
-void game();
+void game(table);
 void display_board();
-void update_board(table *, int, int);
+void update_board(table *, int, int, char);
 bool game_verification();
 void winner();
 
@@ -25,13 +25,29 @@ int main()
     initialize_board(board_game);
 
     int choice;
+    char rules_choice[5];
+
+    printf("\n");
+    printf("############################\n");
+    printf("#####   GAME MORPION   #####\n");
+    printf("############################\n");
+    printf("\n");
+
+    printf("Do you want to display the game rules ? Yes or No\n");
+    printf("> ");
+    scanf("%s", rules_choice);
+    if (strcmp(rules_choice, YES) == 0)
+    {
+        rules();
+    }
+
     bool will = menu();
 
     if (will)
     {
         do
         {
-            game();
+            game(board_game);
             winner();
 
             printf("\n");
@@ -75,21 +91,6 @@ int main()
 bool menu()
 {
     bool answer;
-    char rules_choice[5];
-
-    printf("\n");
-    printf("############################\n");
-    printf("#####   GAME MORPION   #####\n");
-    printf("############################\n");
-    printf("\n");
-
-    printf("Do you want to display the game rules ? Yes or No\n");
-    printf("> ");
-    scanf("%s", rules_choice);
-    if (strcmp(rules_choice, YES) == 0)
-    {
-        rules();
-    }
 
     int choice;
     printf("\n");
@@ -128,7 +129,7 @@ bool menu()
 // Rules procedure
 void rules()
 {
-    printf("Lol\n");
+    printf("rules...\n");
 }
 
 void initialize_board(table t)
@@ -142,7 +143,7 @@ void initialize_board(table t)
     }
 }
 
-void game()
+void game(table t)
 {
     int player1 = 1;
     int player2 = 2;
@@ -157,22 +158,46 @@ void game()
         {
 
         case 1:
+            display_board(t);
             printf("Choose line :\n");
             printf("> ");
             scanf("%d", &posx);
             printf("Choose column :\n");
             printf("> ");
             scanf("%d", &posy);
+
+            do
+            {
+                printf("Invalid option, choose an another line :\n");
+                printf("> ");
+                scanf("%d", &posx);
+                printf("Choose column :\n");
+                printf("> ");
+                scanf("%d", &posy);
+            } while (t[posx][posy] != '.');
+
             player_turn = player2;
             break;
 
         case 2:
+            display_board(t);
             printf("Choose line :\n");
             printf("> ");
             scanf("%d", &posx);
             printf("Choose column :\n");
             printf("> ");
             scanf("%d", &posy);
+
+            do
+            {
+                printf("Invalid option, choose an another line :\n");
+                printf("> ");
+                scanf("%d", &posx);
+                printf("Choose column :\n");
+                printf("> ");
+                scanf("%d", &posy);
+            } while (t[posx][posy] != '.');
+
             player_turn = player1;
             break;
 
@@ -205,7 +230,10 @@ void display_board(table t)
     }
 }
 
-void update_board(table *t, int posx, int posy) {}
+void update_board(table *t, int posx, int posy, char c)
+{
+    *t[posx][posy] = c;
+}
 
 bool game_verification()
 {
