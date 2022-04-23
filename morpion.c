@@ -14,13 +14,11 @@ void rules();
 void initialize_board(table);
 void game(table);
 void display_board();
-void update_board(table *, int, int, char);
 bool game_verification();
 void winner();
 
 // Main function
-int main()
-{
+int main() {
     table board_game;
     initialize_board(board_game);
 
@@ -36,17 +34,14 @@ int main()
     printf("Do you want to display the game rules ? Yes or No\n");
     printf("> ");
     scanf("%s", rules_choice);
-    if (strcmp(rules_choice, YES) == 0)
-    {
+    if (strcmp(rules_choice, YES) == 0) {
         rules();
     }
 
     bool will = menu();
 
-    if (will)
-    {
-        do
-        {
+    if (will) {
+        do {
             game(board_game);
             winner();
 
@@ -55,26 +50,20 @@ int main()
             printf("0 : Quit.\n");
             printf("> ");
             scanf("%d", &choice);
-            if (choice == 1)
-            {
+            if (choice == 1) {
                 will = true;
             }
-            else if (choice == 0)
-            {
+            else if (choice == 0) {
                 will = false;
             }
-            while ((choice != 1) && (choice != 0))
-            {
-                if (choice == 1)
-                {
+            while ((choice != 1) && (choice != 0)) {
+                if (choice == 1) {
                     will = true;
                 }
-                else if (choice == 0)
-                {
+                else if (choice == 0) {
                     will = false;
                 }
-                else
-                {
+                else {
                     printf("Invalid answer, try again :\n");
                     printf("> ");
                     scanf("%d", &choice);
@@ -88,8 +77,7 @@ int main()
 }
 
 // Menu procedure
-bool menu()
-{
+bool menu() {
     bool answer;
 
     int choice;
@@ -98,26 +86,20 @@ bool menu()
     printf("0 : Quit.\n");
     printf("> ");
     scanf("%d", &choice);
-    if (choice == 1)
-    {
+    if (choice == 1) {
         answer = true;
     }
-    else if (choice == 0)
-    {
+    else if (choice == 0) {
         answer = false;
     }
-    while ((choice != 1) && (choice != 0))
-    {
-        if (choice == 1)
-        {
+    while ((choice != 1) && (choice != 0)) {
+        if (choice == 1) {
             answer = true;
         }
-        else if (choice == 0)
-        {
+        else if (choice == 0) {
             answer = false;
         }
-        else
-        {
+        else {
             printf("Invalid answer, try again :\n");
             printf("> ");
             scanf("%d", &choice);
@@ -127,24 +109,19 @@ bool menu()
 }
 
 // Rules procedure
-void rules()
-{
+void rules() {
     printf("rules...\n");
 }
 
-void initialize_board(table t)
-{
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
+void initialize_board(table t) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
             t[i][j] = '.';
         }
     }
 }
 
-void game(table t)
-{
+void game(table t) {
     int player1 = 1;
     int player2 = 2;
 
@@ -152,13 +129,14 @@ void game(table t)
 
     int player_turn = player1;
 
-    while (game_verification())
-    {
-        switch (player_turn)
-        {
+    while (game_verification()) {
+
+        switch (player_turn) {
 
         case 1:
+            printf("\n");
             display_board(t);
+            printf("\n");
             printf("Choose line :\n");
             printf("> ");
             scanf("%d", &posx);
@@ -166,21 +144,25 @@ void game(table t)
             printf("> ");
             scanf("%d", &posy);
 
-            do
-            {
-                printf("Invalid option, choose an another line :\n");
-                printf("> ");
-                scanf("%d", &posx);
-                printf("Choose column :\n");
-                printf("> ");
-                scanf("%d", &posy);
-            } while (t[posx][posy] != '.');
+            if( (t[posx - 1][posy - 1] != '.') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) ) {
+                do {
+                    printf("Invalid option, choose an another line :\n");
+                    printf("> ");
+                    scanf("%d", &posx);
+                    printf("Choose column :\n");
+                    printf("> ");
+                    scanf("%d", &posy);
+                } while ( (t[posx - 1][posy - 1] != '.') && ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
+            }
 
+            t[posx - 1][posy - 1] = 'O';
             player_turn = player2;
             break;
 
         case 2:
+            printf("\n");
             display_board(t);
+            printf("\n");
             printf("Choose line :\n");
             printf("> ");
             scanf("%d", &posx);
@@ -188,16 +170,18 @@ void game(table t)
             printf("> ");
             scanf("%d", &posy);
 
-            do
-            {
-                printf("Invalid option, choose an another line :\n");
-                printf("> ");
-                scanf("%d", &posx);
-                printf("Choose column :\n");
-                printf("> ");
-                scanf("%d", &posy);
-            } while (t[posx][posy] != '.');
-
+            if( (t[posx - 1][posy - 1] != '.') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) ) {
+                do {
+                    printf("Invalid option, choose an another line :\n");
+                    printf("> ");
+                    scanf("%d", &posx);
+                    printf("Choose column :\n");
+                    printf("> ");
+                    scanf("%d", &posy);
+                } while ( (t[posx - 1][posy - 1] != '.') && ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
+            }
+            
+            t[posx - 1][posy - 1] = 'X';
             player_turn = player1;
             break;
 
@@ -209,34 +193,23 @@ void game(table t)
 
 void winner() {}
 
-void display_board(table t)
-{
+void display_board(table t) {
     printf("    1   2   3\n");
-    for (int i = 0; i < 3; i++)
-    {
+    for (int i = 0; i < 3; i++) {
         printf("%d   ", i + 1);
-        for (int j = 0; j < 3; j++)
-        {
-            if (j != 2)
-            {
+        for (int j = 0; j < 3; j++) {
+            if (j != 2) {
                 printf("%c", t[i][j]);
                 printf(" | ");
             }
-            else
-            {
+            else {
                 printf("%c\n", t[i][j]);
             }
         }
     }
 }
 
-void update_board(table *t, int posx, int posy, char c)
-{
-    *t[posx][posy] = c;
-}
-
-bool game_verification()
-{
+bool game_verification() {
     bool res = true;
 
     return res;
