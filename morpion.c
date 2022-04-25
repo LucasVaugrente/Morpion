@@ -43,6 +43,7 @@ int main() {
     bool will = menu();
 
     if (will) {
+        
         do {
 
             players table;
@@ -143,6 +144,7 @@ void initialize_board(table t) {
 }
 
 void game(table t) {
+
     int player1 = 1;
     int player2 = 2;
 
@@ -151,7 +153,9 @@ void game(table t) {
 
     int player_turn = player1;
 
-    while (game_verification(t, posx, posy)) {
+    bool cont = game_verification(t, posx, posy);
+
+    while (cont) {
 
         switch (player_turn) {
 
@@ -166,7 +170,7 @@ void game(table t) {
             printf("> ");
             scanf("%d", &posy);
 
-            if( (t[posx - 1][posy - 1] != '.') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) ) {
+            if( (t[posx - 1][posy - 1] == 'X') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) ) {
                 do {
                     printf("Invalid option, choose an another line :\n");
                     printf("> ");
@@ -174,12 +178,13 @@ void game(table t) {
                     printf("Choose column :\n");
                     printf("> ");
                     scanf("%d", &posy);
-                } while ( (t[posx - 1][posy - 1] != '.') && ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
+                } while ( (t[posx - 1][posy - 1] == 'X') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
             }
 
             // Update Board
             t[posx - 1][posy - 1] = 'O';
 
+            cont = game_verification(t, posx, posy);
             player_turn = player2;
             break;
 
@@ -194,7 +199,7 @@ void game(table t) {
             printf("> ");
             scanf("%d", &posy);
 
-            if( (t[posx - 1][posy - 1] != '.') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) ) {
+            if( (t[posx - 1][posy - 1] == 'O') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) ) {
                 do {
                     printf("Invalid option, choose an another line :\n");
                     printf("> ");
@@ -202,12 +207,13 @@ void game(table t) {
                     printf("Choose column :\n");
                     printf("> ");
                     scanf("%d", &posy);
-                } while ( (t[posx - 1][posy - 1] != '.') && ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
+                } while ( (t[posx - 1][posy - 1] == 'O') || ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
             }
             
             // Update Board
             t[posx - 1][posy - 1] = 'X';
 
+            cont = game_verification(t, posx, posy);
             player_turn = player1;
             break;
 
@@ -237,6 +243,7 @@ void display_board(table t) {
 
 bool game_verification(table t, int posx, int posy) {
 
+    bool res = true;
     char player_sign = t[posx][posy];
 
     int counter = 0;
@@ -249,6 +256,7 @@ bool game_verification(table t, int posx, int posy) {
     }
 
     if(counter!=0) {
+        printf("%c\n", player_sign);
 
         if(player_sign != '.') {
 
@@ -334,10 +342,6 @@ bool game_verification(table t, int posx, int posy) {
             return true;
         }
     }
-    // We can't play anymore
-    else {
-        return true;
-    }
 
-    return true;
+    return res;
 }
