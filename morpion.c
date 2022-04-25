@@ -7,6 +7,7 @@ const char YES[5] = "Yes";
 const char NO[5] = "No";
 
 typedef char table[3][3];
+typedef char players[2];
 
 // Procedures and functions
 bool menu();
@@ -14,11 +15,12 @@ void rules();
 void initialize_board(table);
 void game(table);
 void display_board();
-bool game_verification();
+bool game_verification(table, int, int);
 void winner();
 
 // Main function
 int main() {
+
     table board_game;
     initialize_board(board_game);
 
@@ -42,8 +44,27 @@ int main() {
 
     if (will) {
         do {
+
+            players table;
+            char player1[50];
+            char player2[50];
+
+            printf("Enter the name of the player 1 :\n");
+            printf("> ");
+            scanf("%s", player1);
+
+            printf("This player will have the sign O.\n");
+
+            printf("Enter the name of the player 2 :\n");
+            printf("> ");
+            scanf("%s", player2);
+
+            printf("This player will have the sign X.\n");
+
+            table[0] = player1;
+            table[1] = player2;
+
             game(board_game);
-            winner();
 
             printf("\n");
             printf("1 : Start a new game.\n");
@@ -125,11 +146,12 @@ void game(table t) {
     int player1 = 1;
     int player2 = 2;
 
-    int posx, posy;
+    int posx = 0;
+    int posy = 0;;
 
     int player_turn = player1;
 
-    while (game_verification()) {
+    while (game_verification(t, posx, posy)) {
 
         switch (player_turn) {
 
@@ -155,7 +177,9 @@ void game(table t) {
                 } while ( (t[posx - 1][posy - 1] != '.') && ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
             }
 
+            // Update Board
             t[posx - 1][posy - 1] = 'O';
+
             player_turn = player2;
             break;
 
@@ -181,7 +205,9 @@ void game(table t) {
                 } while ( (t[posx - 1][posy - 1] != '.') && ( (posx>3)||(posy>3)||(posx<1)||(posy<1)) );
             }
             
+            // Update Board
             t[posx - 1][posy - 1] = 'X';
+
             player_turn = player1;
             break;
 
@@ -209,8 +235,109 @@ void display_board(table t) {
     }
 }
 
-bool game_verification() {
-    bool res = true;
+bool game_verification(table t, int posx, int posy) {
 
-    return res;
+    char player_sign = t[posx][posy];
+
+    int counter = 0;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if(t[i][j] == '.') {
+                counter++;
+            }
+        }
+    }
+
+    if(counter!=0) {
+
+        if(player_sign != '.') {
+
+            // Top left
+            if(t[0][0]==player_sign) {
+
+                if(t[0][1]==player_sign) {
+                    if(t[0][2]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+                
+                if(t[1][0]==player_sign) {
+                    if(t[2][0]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+
+            }
+
+            // Bottom right
+            if(t[2][2]==player_sign) {
+
+                if(t[2][1]==player_sign) {
+                    if(t[2][0]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+                
+                if(t[1][2]==player_sign) {
+                    if(t[0][2]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+            }
+
+            // Left
+            if(t[1][0]==player_sign) {
+
+                if(t[1][1]==player_sign) {
+                    if(t[1][2]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+
+            }
+
+            // Top
+            if(t[0][1]==player_sign) {
+
+                if(t[1][1]==player_sign) {
+                    if(t[2][1]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+
+            }
+            
+            // Middle (diagonals)
+            if(t[1][1]==player_sign) {
+
+                if(t[0][1]==player_sign) {
+                    if(t[2][2]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+                
+                if(t[0][2]==player_sign) {
+                    if(t[2][0]==player_sign) {
+                        winner();
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+    }
+    // We can't play anymore
+    else {
+        return true;
+    }
+
+    return true;
 }
