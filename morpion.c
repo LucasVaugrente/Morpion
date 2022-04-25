@@ -46,7 +46,7 @@ int main() {
         
         do {
 
-            players table;
+            //players table;
             char player1[50];
             char player2[50];
 
@@ -62,8 +62,8 @@ int main() {
 
             printf("This player will have the sign X.\n");
 
-            table[0] = player1;
-            table[1] = player2;
+            //table[0] = player1;
+            //table[1] = player2;
 
             game(board_game);
 
@@ -223,8 +223,6 @@ void game(table t) {
     }
 }
 
-void winner() {}
-
 void display_board(table t) {
     printf("    1   2   3\n");
     for (int i = 0; i < 3; i++) {
@@ -345,3 +343,5 @@ bool game_verification(table t, int posx, int posy) {
 
     return res;
 }
+
+void winner() {}
