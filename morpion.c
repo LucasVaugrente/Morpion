@@ -57,40 +57,38 @@ int main() {
         rules(board_game);
     }
 
-    else if ( (strcmp(rules_choice, NO) == 0) || (strcmp(rules_choice, NO2) == 0) ) {
+    bool will = menu();
 
-        bool will = menu();
+    if (will) {
+        
+        do {
 
-        if (will) {
-            
-            do {
+            printf("\n");
+            printf("Enter the name of the player 1 :\n");
+            printf("> ");
+            scanf("%s", player1);
 
-                printf("\n");
-                printf("Enter the name of the player 1 :\n");
-                printf("> ");
-                scanf("%s", player1);
+            printf("\n");
+            printf("This player will have the sign O.\n");
+            printf("\n");
 
-                printf("\n");
-                printf("This player will have the sign O.\n");
-                printf("\n");
+            printf("Enter the name of the player 2 :\n");
+            printf("> ");
+            scanf("%s", player2);
 
-                printf("Enter the name of the player 2 :\n");
-                printf("> ");
-                scanf("%s", player2);
+            printf("\n");
+            printf("This player will have the sign X.\n");
+            printf("\n");
 
-                printf("\n");
-                printf("This player will have the sign X.\n");
-                printf("\n");
+            initialize_board(board_game);
 
-                initialize_board(board_game);
+            game(board_game);
 
-                game(board_game);
+            will = menu();
 
-                will = menu();
-
-            } while (will);
-        }
+        } while (will);
     }
+
 
     return EXIT_SUCCESS;
 }
