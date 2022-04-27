@@ -199,7 +199,7 @@ void game(table t) {
 
     int player_turn = player1;
 
-    bool cont = game_verification(t, posx, posy);
+    bool cont = true;
 
     while (cont) {
 
@@ -230,7 +230,7 @@ void game(table t) {
             // Update Board
             t[posx - 1][posy - 1] = 'O';
 
-            cont = game_verification(t, posx, posy);
+            cont = game_verification(t, posx-1, posy-1);
             player_turn = player2;
             break;
 
@@ -259,7 +259,7 @@ void game(table t) {
             // Update Board
             t[posx - 1][posy - 1] = 'X';
 
-            cont = game_verification(t, posx, posy);
+            cont = game_verification(t, posx-1, posy-1);
             player_turn = player1;
             break;
 
@@ -287,7 +287,7 @@ void display_board(table t) {
 
 bool game_verification(table t, int posx, int posy) {
 
-    bool res = true;
+    bool res = false;
     char player_sign = t[posx][posy];
 
     int counter = 0;
@@ -300,7 +300,6 @@ bool game_verification(table t, int posx, int posy) {
     }
 
     if(counter!=0) {
-        printf("%c\n", player_sign);
 
         if(player_sign != '.') {
 
