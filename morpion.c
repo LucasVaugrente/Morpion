@@ -10,7 +10,10 @@ const char NO[5] = "No";
 const char NO2[5] = "no";
 
 typedef char table[3][3];
-typedef char players[2];
+
+char player1[50];
+char player2[50];
+char *players[2] = {player1, player2};
 
 // Procedures and functions
 bool menu();
@@ -19,7 +22,6 @@ void initialize_board(table);
 void game(table);
 void display_board();
 bool game_verification(table, int, int);
-void winner();
 
 // Main function
 int main() {
@@ -63,9 +65,6 @@ int main() {
             
             do {
 
-                char player1[50];
-                char player2[50];
-
                 printf("\n");
                 printf("Enter the name of the player 1 :\n");
                 printf("> ");
@@ -82,7 +81,7 @@ int main() {
                 printf("\n");
                 printf("This player will have the sign X.\n");
                 printf("\n");
-                
+
                 game(board_game);
 
                 will = menu();
@@ -308,14 +307,28 @@ bool game_verification(table t, int posx, int posy) {
 
                 if(t[0][1]==player_sign) {
                     if(t[0][2]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
                 
                 if(t[1][0]==player_sign) {
                     if(t[2][0]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
@@ -327,14 +340,28 @@ bool game_verification(table t, int posx, int posy) {
 
                 if(t[2][1]==player_sign) {
                     if(t[2][0]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
                 
                 if(t[1][2]==player_sign) {
                     if(t[0][2]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
@@ -345,7 +372,14 @@ bool game_verification(table t, int posx, int posy) {
 
                 if(t[1][1]==player_sign) {
                     if(t[1][2]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
@@ -357,7 +391,14 @@ bool game_verification(table t, int posx, int posy) {
 
                 if(t[1][1]==player_sign) {
                     if(t[2][1]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
@@ -369,14 +410,28 @@ bool game_verification(table t, int posx, int posy) {
 
                 if(t[0][1]==player_sign) {
                     if(t[2][2]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
                 
                 if(t[0][2]==player_sign) {
                     if(t[2][0]==player_sign) {
-                        winner();
+                        if(player_sign == 'O') {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[0]);
+                        }
+                        else {
+                            printf("\n");
+                            printf("%s wins the game ! Yaayyy :D\n", players[1]);
+                        }
                         return false;
                     }
                 }
@@ -388,5 +443,3 @@ bool game_verification(table t, int posx, int posy) {
 
     return res;
 }
-
-void winner() {}
