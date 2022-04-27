@@ -5,7 +5,9 @@
 #include <time.h>
 
 const char YES[5] = "Yes";
+const char YES2[5] = "yes";
 const char NO[5] = "No";
+const char NO2[5] = "no";
 
 typedef char table[3][3];
 typedef char players[2];
@@ -37,74 +39,62 @@ int main() {
     printf("Do you want to display the game rules ? Yes or No\n");
     printf("> ");
     scanf("%s", rules_choice);
-    if (strcmp(rules_choice, YES) == 0) {
+
+    if ( (strcmp(rules_choice, YES) != 0) && (strcmp(rules_choice, YES2) != 0) && (strcmp(rules_choice, NO) != 0 && (strcmp(rules_choice, NO2) != 0 ) ) ) {
+
+        do {
+            
+            printf("Invalid answer, try again :\n");
+            printf("> ");
+            scanf("%s", rules_choice);
+
+        } while ( (strcmp(rules_choice, YES) != 0) && (strcmp(rules_choice, YES2) != 0) && (strcmp(rules_choice, NO) != 0 && (strcmp(rules_choice, NO2) != 0 ) ) );
+    }
+
+    if ( (strcmp(rules_choice, YES) == 0) || (strcmp(rules_choice, YES2) == 0) ) {
         rules(board_game);
     }
 
-    bool will = menu();
+    else if ( (strcmp(rules_choice, NO) == 0) || (strcmp(rules_choice, NO2) == 0) ) {
 
-    if (will) {
-        
-        do {
+        bool will = menu();
 
-            //players table;
-            char player1[50];
-            char player2[50];
+        if (will) {
+            
+            do {
 
-            printf("\n");
-            printf("Enter the name of the player 1 :\n");
-            printf("> ");
-            scanf("%s", player1);
+                char player1[50];
+                char player2[50];
 
-            printf("\n");
-            printf("This player will have the sign O.\n");
-            printf("\n");
+                printf("\n");
+                printf("Enter the name of the player 1 :\n");
+                printf("> ");
+                scanf("%s", player1);
 
-            printf("Enter the name of the player 2 :\n");
-            printf("> ");
-            scanf("%s", player2);
+                printf("\n");
+                printf("This player will have the sign O.\n");
+                printf("\n");
 
-            printf("\n");
-            printf("This player will have the sign X.\n");
-            printf("\n");
+                printf("Enter the name of the player 2 :\n");
+                printf("> ");
+                scanf("%s", player2);
 
-            //table[0] = player1;
-            //table[1] = player2;
+                printf("\n");
+                printf("This player will have the sign X.\n");
+                printf("\n");
+                
+                game(board_game);
 
-            game(board_game);
+                will = menu();
 
-            printf("\n");
-            printf("1 : Start a new game.\n");
-            printf("0 : Quit.\n");
-            printf("> ");
-            scanf("%d", &choice);
-            if (choice == 1) {
-                will = true;
-            }
-            else if (choice == 0) {
-                will = false;
-            }
-            while ((choice != 1) && (choice != 0)) {
-                if (choice == 1) {
-                    will = true;
-                }
-                else if (choice == 0) {
-                    will = false;
-                }
-                else {
-                    printf("Invalid answer, try again :\n");
-                    printf("> ");
-                    scanf("%d", &choice);
-                }
-            }
-
-        } while (will);
+            } while (will);
+        }
     }
 
     return EXIT_SUCCESS;
 }
 
-// Menu procedure
+// Menu function
 bool menu() {
 
     bool answer;
