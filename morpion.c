@@ -34,7 +34,7 @@ int main() {
 
     printf("\n");
     printf("############################\n");
-    printf("#####   TIC TAC TOE    #####\n");
+    printf("#####   TIC TAC TOE     #####\n");
     printf("############################\n");
     printf("\n");
 
